@@ -2,11 +2,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { NextFunction, Request, Response } from "express";
-import httpStatus from "http-status-codes";
+import { StatusCodes } from "http-status-codes";
 import passport from "passport";
 import AppError from "../../errorHelpers/appError.js";
 import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
+import { setAuthCookie } from "../../utils/setCookie.js";
+import { createUserToken } from "../../utils/userTokens.js";
 
 // user login with credentials
 const credentialsLogin = catchAsync(
@@ -20,18 +22,21 @@ const credentialsLogin = catchAsync(
         return next(new AppError(401, info.message));
       }
 
+      const userTokens = createUserToken(user);
+
       const { password: pass, ...rest } = user.toObject();
 
+      setAuthCookie(res, userTokens);
+
       sendResponse(res, {
-        statusCode: httpStatus.OK,
+        statusCode: StatusCodes.OK,
         success: true,
         message: "User Logged In Successfully",
-        data: rest,
+        data: { user: rest, accessToken: userTokens.accessToken },
       });
     })(req, res, next);
   }
 );
-
 export const AuthControllers = {
   credentialsLogin,
 };
