@@ -16,6 +16,32 @@ const addJob = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get all jobs //
+const getAllJobs = catchAsync(async (req: Request, res: Response) => {
+  const jobs = await jobService.getAllJobs();
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Jobs retrieved successfully",
+    data: jobs,
+  });
+});
+
+// get job by ID //
+const getJobById = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const job = await jobService.getJobById(id as string);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Job retrieved successfully",
+    data: job,
+  });
+});
+
 export const JobController = {
   addJob,
+  getAllJobs,
+  getJobById,
 };
