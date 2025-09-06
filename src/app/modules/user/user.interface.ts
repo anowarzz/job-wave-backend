@@ -1,8 +1,8 @@
 import { Types } from "mongoose";
 
 export enum UserRole {
-  USER = "USER",
-  AGENT = "AGENT",
+  CANDIDATE = "CANDIDATE",
+  RECRUITER = "RECRUITER",
   ADMIN = "ADMIN",
 }
 
@@ -13,6 +13,7 @@ export interface IUser {
   password: string;
   address?: string;
   bio?: string;
+  username?: string;
   phone?: string;
   role: UserRole;
   isBlocked?: boolean;

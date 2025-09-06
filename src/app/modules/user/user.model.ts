@@ -47,7 +47,7 @@ const userSchema = new Schema<UserModel>(
     role: {
       type: String,
       enum: Object.values(UserRole),
-      default: UserRole.USER,
+      default: UserRole.CANDIDATE,
     },
     isBlocked: {
       type: Boolean,
