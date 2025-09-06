@@ -1,23 +1,17 @@
-import { Response } from "express";
+import { Router } from "express";
+import { UserRoutes } from "../modules/user/user.route.js";
 
-interface TMeta {
-  total: number;
-}
+const router: Router = Router();
 
-interface TResponse<T> {
-  statusCode: number;
-  success: boolean;
-  message: string;
-  data: T;
-  meta?: TMeta;
-}
+const moduleRoutes = [
+  {
+    path: "/user",
+    route: UserRoutes,
+  },
+];
 
-export const sendResponse = <T>(res: Response, data: TResponse<T>) => {
-  res.status(data.statusCode).json({
-    statusCode: data.statusCode,
-    success: data.success,
-    message: data.message,
-    meta: data.meta,
-    data: data.data,
-  });
-};
+moduleRoutes.forEach((route) => {
+  router.use(route.path, route.route);
+});
+
+export default router;

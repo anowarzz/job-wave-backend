@@ -5,12 +5,14 @@ import express, {
   type Request,
   type Response,
 } from "express";
+import router from "./app/routes/index.js";
 
 const app: Application = express();
 
 // Parser
 app.use(express.json());
 app.use(cors());
+app.use("/api/v1", router);
 
 // Testing API HomeRoute
 const test = async (req: Request, res: Response) => {
