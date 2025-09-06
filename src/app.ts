@@ -16,8 +16,7 @@ app.use(cors());
 const test = async (req: Request, res: Response) => {
   res.status(200).json({
     success: true,
-    message: "Welcome To The App Server",
-    note: "Great things takes time",
+    message: "Welcome To The Job Wave Server",
   });
 };
 
