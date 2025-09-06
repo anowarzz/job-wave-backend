@@ -6,7 +6,7 @@ export const createUserValidationSchema = z.object({
   name: z
     .string({ error: "Name Is Required" })
     .min(3, "Name must be at least 3 characters")
-    .max(25, "Name must be less than 25 characters"),
+    .max(50, "Name must be less than 50 characters"),
 
   email: z.email("Please Provide a valid email address"),
 

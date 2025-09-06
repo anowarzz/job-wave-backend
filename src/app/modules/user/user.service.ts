@@ -30,6 +30,18 @@ const createUser = async (userPayload: Partial<IUser>) => {
   return rest;
 };
 
+/*/ get user profile  /*/
+const getMyProfile = async (userId: string) => {
+  const user = await User.findById(userId).select("-password");
+
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User Not Found");
+  }
+
+  return user;
+};
+
 export const userServices = {
   createUser,
+  getMyProfile,
 };

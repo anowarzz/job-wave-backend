@@ -1,13 +1,7 @@
 import { Schema, model } from "mongoose";
 import { IUser, UserRole } from "./user.interface.js";
 
-interface IUserMethods {
-  comparePassword(candidatePassword: string): Promise<boolean>;
-}
-
-type UserModel = IUser & IUserMethods;
-
-const userSchema = new Schema<UserModel>(
+const userSchema = new Schema<IUser>(
   {
     name: {
       type: String,
@@ -64,4 +58,4 @@ const userSchema = new Schema<UserModel>(
   }
 );
 
-export const User = model<UserModel>("User", userSchema);
+export const User = model<IUser>("User", userSchema);
