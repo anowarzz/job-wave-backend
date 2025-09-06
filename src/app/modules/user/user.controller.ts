@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
-import { catchAsync } from "./../../utils/catchAsynct.js";
 import { userServices } from "./user.service.js";
 
 // create user

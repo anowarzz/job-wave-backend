@@ -16,5 +16,6 @@ export interface IUser {
   phone?: string;
   role: UserRole;
   isBlocked?: boolean;
+  isDeleted?: boolean;
   createdAt: Date;
 }

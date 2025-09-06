@@ -5,10 +5,8 @@ import { User } from "./user.model.js";
 
 const createUser = async (userData: Partial<IUser>): Promise<IUser> => {
   if (userData.password) {
-    userData.password = await bcrypt.hash(
-      userData.password,
-      envVars.BCRYPT_SALT_ROUNDS
-    );
+    const saltRounds = envVars.BCRYPT_SALT_ROUNDS || 10;
+    userData.password = await bcrypt.hash(userData.password, saltRounds);
   }
 
   const user = await User.create(userData);

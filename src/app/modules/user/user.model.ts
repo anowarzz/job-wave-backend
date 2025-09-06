@@ -30,7 +30,6 @@ const userSchema = new Schema<UserModel>(
       type: String,
       required: [true, "Password is required"],
       minlength: [6, "Password must be at least 6 characters long"],
-      select: false,
     },
     address: {
       type: String,
@@ -54,9 +53,14 @@ const userSchema = new Schema<UserModel>(
       type: Boolean,
       default: false,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 

@@ -3,6 +3,7 @@ import { Server } from "http";
 import mongoose from "mongoose";
 import app from "./app.js";
 import { envVars } from "./app/config/env.js";
+import "./app/config/passport.js";
 
 let server: Server;
 
