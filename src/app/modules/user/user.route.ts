@@ -1,9 +1,12 @@
 import { Router } from "express";
+import { checkAuth } from "../../middlewares/checkAuth.js";
 import { validateRequest } from "../../middlewares/validateRequest.js";
 import { userController } from "./user.controller.js";
-import { createUserValidationSchema } from "./user.validation.js";
-import { checkAuth } from "../../middlewares/checkAuth.js";
 import { UserRole } from "./user.interface.js";
+import {
+  createUserValidationSchema,
+  updateUserValidationSchema,
+} from "./user.validation.js";
 
 const router = Router();
 
@@ -14,14 +17,19 @@ router.post(
   userController.createUser
 );
 
-// get user profile - get me
+// get user own profile
 router.get(
   "/me",
   checkAuth(...Object.values(UserRole)),
   userController.getMyProfile
 );
 
-
-
+// update a user info
+router.patch(
+  "/update/:id",
+  validateRequest(updateUserValidationSchema),
+  checkAuth(...Object.values(UserRole)),
+  userController.updateUser
+);
 
 export const UserRoutes: Router = router;
