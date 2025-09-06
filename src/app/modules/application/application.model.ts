@@ -3,12 +3,12 @@ import { IApplication } from "./application.interface.js";
 
 const applicationSchema = new Schema<IApplication>(
   {
-    candidateId: {
+    candidate: {
       type: Types.ObjectId,
       ref: "User",
       required: true,
     },
-    jobId: {
+    job: {
       type: Types.ObjectId,
       ref: "Job",
       required: true,

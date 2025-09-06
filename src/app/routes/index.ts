@@ -1,8 +1,9 @@
 import { Router } from "express";
+import { ApplicationRoutes } from "../modules/application/application.route.js";
 import { AuthRoutes } from "../modules/auth/auth.route.js";
+import { CandidateRoutes } from "../modules/Candidate/candidate.route.js";
 import { JobRoutes } from "../modules/job/job.route.js";
 import { UserRoutes } from "../modules/user/user.route.js";
-import { ApplicationRoutes } from "../modules/application/application.route.js";
 
 const router: Router = Router();
 
@@ -22,6 +23,10 @@ const moduleRoutes = [
   {
     path: "/jobs",
     route: JobRoutes,
+  },
+  {
+    path: "/candidate",
+    route: CandidateRoutes,
   },
 ];
 
