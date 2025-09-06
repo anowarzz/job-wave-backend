@@ -3,6 +3,7 @@ import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 import { jobService } from "./job.service.js";
 
+// --------
 // add a job //
 const addJob = catchAsync(async (req: Request, res: Response) => {
   const jobData = req.body;
@@ -16,6 +17,9 @@ const addJob = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+
+//-----
 // get all jobs //
 const getAllJobs = catchAsync(async (req: Request, res: Response) => {
   const jobs = await jobService.getAllJobs();
@@ -27,6 +31,7 @@ const getAllJobs = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// -----
 // get job by ID //
 const getJobById = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -40,8 +45,26 @@ const getJobById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// -------
+  // Update job by ID //
+  const updateJob = catchAsync(async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const updateData = req.body;
+    const updatedJob = await jobService.updateJob(id as string, updateData);
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Job updated successfully",
+      data: updatedJob,
+    });
+  });
+
+
+
+
 export const JobController = {
   addJob,
   getAllJobs,
   getJobById,
+  updateJob,
 };

@@ -11,7 +11,7 @@ const addJob = async (jobData: IJob) => {
 
 // Get all jobs //
 const getAllJobs = async () => {
-  const jobs = await Job.find().populate("recruiterId", "name email");
+  const jobs = await Job.find().populate("recruiterId", "-_id name email");
   return jobs;
 };
 
@@ -21,7 +21,10 @@ const getJobById = async (jobId: string) => {
     throw new AppError(StatusCodes.BAD_REQUEST, "Job ID is required");
   }
 
-  const job = await Job.findById(jobId).populate("recruiterId", "name email");
+  const job = await Job.findById(jobId).populate(
+    "recruiterId",
+    "-_id name email"
+  );
 
   if (!job) {
     throw new AppError(StatusCodes.NOT_FOUND, "Job not found");
@@ -30,8 +33,28 @@ const getJobById = async (jobId: string) => {
   return job;
 };
 
+// Update job by ID
+const updateJob = async (jobId: string, updateData: Partial<IJob>) => {
+  if (!jobId) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "Job ID is required");
+  }
+
+  const jobToUpdate = await Job.findById(jobId);
+  if (!jobToUpdate) {
+    throw new AppError(StatusCodes.NOT_FOUND, "Job not found");
+  }
+
+  const updatedJob = await Job.findByIdAndUpdate(jobId, updateData, {
+    new: true,
+    runValidators: true,
+  }).populate("recruiterId", "-_id name email");
+
+  return updatedJob;
+};
+
 export const jobService = {
   addJob,
   getAllJobs,
   getJobById,
+  updateJob,
 };
