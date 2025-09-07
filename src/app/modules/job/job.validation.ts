@@ -12,7 +12,7 @@ export const createJobValidationSchema = z.object({
     .min(10, "Job description must be at least 10 characters")
     .max(2000, "Job description must be less than 2000 characters"),
 
-  recruiterId: z.string(),
+  recruiter: z.string(),
 
   jobType: z.enum([
     "full-time",
@@ -21,6 +21,8 @@ export const createJobValidationSchema = z.object({
     "freelance",
     "internship",
   ]),
+
+  requiredSkills: z.array(z.string()).min(1, "At least one skill is required"),
 
   location: z
     .string()
@@ -51,7 +53,12 @@ export const updateJobValidationSchema = z.object({
     .max(2000, "Job description must be less than 2000 characters")
     .optional(),
 
-  recruiterId: z.string().optional(),
+  recruiter: z.string().optional(),
+
+  requiredSkills: z
+    .array(z.string())
+    .min(1, "At least one skill is required")
+    .optional(),
 
   jobType: z
     .enum(["full-time", "part-time", "contract", "freelance", "internship"])

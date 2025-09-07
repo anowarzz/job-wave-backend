@@ -15,7 +15,7 @@ const jobSchema = new Schema<IJob>(
       trim: true,
       maxlength: [2000, "Job description cannot exceed 2000 characters"],
     },
-    recruiterId: {
+    recruiter: {
       type: Schema.Types.ObjectId,
       ref: "User",
       required: [true, "Recruiter ID is required"],
@@ -35,6 +35,11 @@ const jobSchema = new Schema<IJob>(
         message:
           "Job type must be one of: full-time, part-time, contract, freelance, internship",
       },
+    },
+
+    requiredSkills: {
+      type: [String],
+      required: [true, "At least one skill is required"],
     },
     location: {
       type: String,

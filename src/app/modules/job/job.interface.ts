@@ -13,8 +13,9 @@ export interface IJob {
   _id: Types.ObjectId;
   title: string;
   description: string;
-  recruiterId: Types.ObjectId;
+  recruiter: Types.ObjectId;
   jobType: TJobType;
+  requiredSkills: string[];
   location: string;
   status: TJobStatus;
   salaryRange: string;
