@@ -7,7 +7,7 @@ export enum UserRole {
 }
 
 export interface IUser {
-  _id: Types.ObjectId;
+  _id?: Types.ObjectId;
   name: string;
   email: string;
   password: string;
@@ -18,5 +18,4 @@ export interface IUser {
   role: UserRole;
   isBlocked?: boolean;
   isDeleted?: boolean;
-  createdAt: Date;
 }

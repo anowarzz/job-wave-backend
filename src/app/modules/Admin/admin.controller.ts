@@ -4,22 +4,34 @@ import { catchAsync } from "../../utils/catchAsync.js";
 import { sendResponse } from "../../utils/sendResponse.js";
 import { adminService } from "./admin.service.js";
 
-// Get all users
-const getAllUsers = catchAsync(async (req: Request, res: Response) => {
-  const users = await adminService.getAllUsers();
+// Get all candidates
+const getAllCandidates = catchAsync(async (req: Request, res: Response) => {
+  const candidates = await adminService.getAllCandidates();
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: "Users retrieved successfully",
-    data: users,
+    message: "Candidates retrieved successfully",
+    data: candidates,
+  });
+});
+
+// Get all recruiters
+const getAllRecruiters = catchAsync(async (req: Request, res: Response) => {
+  const recruiters = await adminService.getAllRecruiters();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Recruiters retrieved successfully",
+    data: recruiters,
   });
 });
 
 // Get user by ID
 const getUserById = catchAsync(async (req: Request, res: Response) => {
   const { userId } = req.params;
-  const user = await adminService.getUserById(userId);
+  const user = await adminService.getUserById(userId as string);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -30,6 +42,7 @@ const getUserById = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const AdminController = {
-  getAllUsers,
+  getAllCandidates,
+  getAllRecruiters,
   getUserById,
 };

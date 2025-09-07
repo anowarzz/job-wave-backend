@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import app from "./app.js";
 import { envVars } from "./app/config/env.js";
 import "./app/config/passport.js";
+import { seedSuperAdmin } from "./app/utils/seedSuperAdmin.js";
 
 let server: Server;
 
@@ -25,7 +26,9 @@ const startServer = async () => {
 //  start server
 (async () => {
   await startServer();
+  await seedSuperAdmin();
 })();
+
 
 // Unhandled rejection handling
 process.on("unhandledRejection", (err) => {

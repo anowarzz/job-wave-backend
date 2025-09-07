@@ -5,11 +5,18 @@ import { AdminController } from "./admin.controller.js";
 
 const router = Router();
 
-// Get all users
+// Get all candidates
 router.get(
-  "/all-users",
+  "/candidates",
   checkAuth(UserRole.ADMIN),
-  AdminController.getAllUsers
+  AdminController.getAllCandidates
+);
+
+// Get all recruiters
+router.get(
+  "/recruiters",
+  checkAuth(UserRole.ADMIN),
+  AdminController.getAllRecruiters
 );
 
 // Get user by ID
