@@ -7,7 +7,7 @@ import { User } from "../user/user.model.js";
 
 // Get all candidates
 const getAllCandidates = async () => {
-  const candidates = await User.find({ role: UserRole.CANDIDATE })
+  const candidates = await User.find({ role: UserRole.CANDIDATE, isDeleted: false })
     .select("-password")
     .sort({ createdAt: -1 });
   return candidates;
@@ -15,7 +15,7 @@ const getAllCandidates = async () => {
 
 // Get all recruiters
 const getAllRecruiters = async () => {
-  const recruiters = await User.find({ role: UserRole.RECRUITER })
+  const recruiters = await User.find({ role: UserRole.RECRUITER, isDeleted: false })
     .select("-password")
     .sort({ createdAt: -1 });
   return recruiters;
@@ -108,6 +108,35 @@ const getAnalytics = async () => {
   };
 };
 
+// Delete user (soft delete)
+const deleteUser = async (userId: string) => {
+  if (!userId) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "User ID is required");
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+  }
+
+  if (user.role === UserRole.ADMIN) {
+    throw new AppError(StatusCodes.FORBIDDEN, "Cannot delete admin user");
+  }
+
+  if (user.isDeleted) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "User is already deleted");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { isDeleted: true },
+    { new: true }
+  ).select("-password");
+
+  return updatedUser;
+};
+
 export const adminService = {
   getAllCandidates,
   getAllRecruiters,
@@ -115,4 +144,5 @@ export const adminService = {
   blockUser,
   unblockUser,
   getAnalytics,
+  deleteUser,
 };

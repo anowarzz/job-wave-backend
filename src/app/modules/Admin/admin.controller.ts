@@ -79,6 +79,19 @@ const getAnalytics = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Delete user (soft delete)
+const deleteUser = catchAsync(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = await adminService.deleteUser(userId as string);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "User deleted successfully",
+    data: user,
+  });
+});
+
 export const AdminController = {
   getAllCandidates,
   getAllRecruiters,
@@ -86,4 +99,5 @@ export const AdminController = {
   blockUser,
   unblockUser,
   getAnalytics,
+  deleteUser,
 };

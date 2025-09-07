@@ -47,4 +47,11 @@ router.get(
   AdminController.getAnalytics
 );
 
+// Delete user (soft delete)
+router.delete(
+  "/users/delete/:userId",
+  checkAuth(UserRole.ADMIN),
+  AdminController.deleteUser
+);
+
 export const AdminRoutes: Router = router;
