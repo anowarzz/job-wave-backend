@@ -1,5 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errorHelpers/appError.js";
+import { Application } from "../application/application.model.js";
+import { Job } from "../job/job.model.js";
 import { UserRole } from "../user/user.interface.js";
 import { User } from "../user/user.model.js";
 
@@ -88,10 +90,29 @@ const unblockUser = async (userId: string) => {
   return updatedUser;
 };
 
+// Get analytics data
+const getAnalytics = async () => {
+  const [totalCandidates, totalRecruiters, totalJobPosts, totalApplications] =
+    await Promise.all([
+      User.countDocuments({ role: UserRole.CANDIDATE }),
+      User.countDocuments({ role: UserRole.RECRUITER }),
+      Job.countDocuments(),
+      Application.countDocuments(),
+    ]);
+
+  return {
+    totalCandidates,
+    totalRecruiters,
+    totalJobPosts,
+    totalApplications,
+  };
+};
+
 export const adminService = {
   getAllCandidates,
   getAllRecruiters,
   getUserById,
   blockUser,
   unblockUser,
+  getAnalytics,
 };

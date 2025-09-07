@@ -40,4 +40,11 @@ router.patch(
   AdminController.unblockUser
 );
 
+// Get analytics
+router.get(
+  "/analytics",
+  checkAuth(UserRole.ADMIN),
+  AdminController.getAnalytics
+);
+
 export const AdminRoutes: Router = router;

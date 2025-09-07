@@ -67,10 +67,23 @@ const unblockUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Get analytics
+const getAnalytics = catchAsync(async (req: Request, res: Response) => {
+  const analytics = await adminService.getAnalytics();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Analytics retrieved successfully",
+    data: analytics,
+  });
+});
+
 export const AdminController = {
   getAllCandidates,
   getAllRecruiters,
   getUserById,
   blockUser,
   unblockUser,
+  getAnalytics,
 };
