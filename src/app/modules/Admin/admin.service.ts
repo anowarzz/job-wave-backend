@@ -7,7 +7,10 @@ import { User } from "../user/user.model.js";
 
 // Get all candidates
 const getAllCandidates = async () => {
-  const candidates = await User.find({ role: UserRole.CANDIDATE, isDeleted: false })
+  const candidates = await User.find({
+    role: UserRole.CANDIDATE,
+    isDeleted: false,
+  })
     .select("-password")
     .sort({ createdAt: -1 });
   return candidates;
@@ -15,7 +18,10 @@ const getAllCandidates = async () => {
 
 // Get all recruiters
 const getAllRecruiters = async () => {
-  const recruiters = await User.find({ role: UserRole.RECRUITER, isDeleted: false })
+  const recruiters = await User.find({
+    role: UserRole.RECRUITER,
+    isDeleted: false,
+  })
     .select("-password")
     .sort({ createdAt: -1 });
   return recruiters;
@@ -137,6 +143,14 @@ const deleteUser = async (userId: string) => {
   return updatedUser;
 };
 
+// Get all jobs (admin view)
+const getAllJobs = async () => {
+  const jobs = await Job.find()
+    .populate("recruiter", "name email")
+    .sort({ createdAt: -1 });
+  return jobs;
+};
+
 export const adminService = {
   getAllCandidates,
   getAllRecruiters,
@@ -145,4 +159,5 @@ export const adminService = {
   unblockUser,
   getAnalytics,
   deleteUser,
+  getAllJobs,
 };

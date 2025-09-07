@@ -92,6 +92,18 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Get all jobs (admin view)
+const getAllJobs = catchAsync(async (req: Request, res: Response) => {
+  const jobs = await adminService.getAllJobs();
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "All jobs retrieved successfully",
+    data: jobs,
+  });
+});
+
 export const AdminController = {
   getAllCandidates,
   getAllRecruiters,
@@ -100,4 +112,5 @@ export const AdminController = {
   unblockUser,
   getAnalytics,
   deleteUser,
+  getAllJobs,
 };

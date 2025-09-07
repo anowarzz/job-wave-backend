@@ -47,7 +47,10 @@ router.get(
   AdminController.getAnalytics
 );
 
-// Delete user (soft delete)
+// Get all jobs 
+router.get("/all-jobs", checkAuth(UserRole.ADMIN), AdminController.getAllJobs);
+
+// Delete user 
 router.delete(
   "/users/delete/:userId",
   checkAuth(UserRole.ADMIN),
