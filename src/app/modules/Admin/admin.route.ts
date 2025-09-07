@@ -26,4 +26,18 @@ router.get(
   AdminController.getUserById
 );
 
+// Block user
+router.patch(
+  "/users/block/:userId",
+  checkAuth(UserRole.ADMIN),
+  AdminController.blockUser
+);
+
+// Unblock user
+router.patch(
+  "/users/unblock/:userId",
+  checkAuth(UserRole.ADMIN),
+  AdminController.unblockUser
+);
+
 export const AdminRoutes: Router = router;

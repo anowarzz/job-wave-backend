@@ -34,8 +34,64 @@ const getUserById = async (userId: string) => {
   return user;
 };
 
+// Block user
+const blockUser = async (userId: string) => {
+  if (!userId) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "User ID is required");
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+  }
+
+  if (user.role === UserRole.ADMIN) {
+    throw new AppError(StatusCodes.FORBIDDEN, "Cannot block admin user");
+  }
+
+  if (user.isBlocked) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "User is already blocked");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { isBlocked: true },
+    { new: true }
+  ).select("-password");
+
+  return updatedUser;
+};
+
+// Unblock user
+const unblockUser = async (userId: string) => {
+  if (!userId) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "User ID is required");
+  }
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User not found");
+  }
+
+  if (!user.isBlocked) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "User is not blocked");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    userId,
+    { isBlocked: false },
+    { new: true }
+  ).select("-password");
+
+  return updatedUser;
+};
+
 export const adminService = {
   getAllCandidates,
   getAllRecruiters,
   getUserById,
+  blockUser,
+  unblockUser,
 };

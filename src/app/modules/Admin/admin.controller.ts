@@ -41,8 +41,36 @@ const getUserById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Block user
+const blockUser = catchAsync(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = await adminService.blockUser(userId as string);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "User blocked successfully",
+    data: user,
+  });
+});
+
+// Unblock user
+const unblockUser = catchAsync(async (req: Request, res: Response) => {
+  const { userId } = req.params;
+  const user = await adminService.unblockUser(userId as string);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "User unblocked successfully",
+    data: user,
+  });
+});
+
 export const AdminController = {
   getAllCandidates,
   getAllRecruiters,
   getUserById,
+  blockUser,
+  unblockUser,
 };
