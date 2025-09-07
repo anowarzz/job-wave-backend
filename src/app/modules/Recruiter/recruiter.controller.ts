@@ -5,7 +5,7 @@ import { sendResponse } from "../../utils/sendResponse.js";
 import { recruiterService } from "./recruiter.service.js";
 
 // Get all jobs posted by the authenticated recruiter
-const getMyJobs = catchAsync(async (req: Request, res: Response) => {
+const getMyPostedJobs = catchAsync(async (req: Request, res: Response) => {
   const decodedToken = req.user as JwtPayload;
   const recruiterId = decodedToken.userId;
 
@@ -20,5 +20,5 @@ const getMyJobs = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const RecruiterController = {
-  getMyJobs,
+  getMyPostedJobs,
 };

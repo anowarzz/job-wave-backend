@@ -5,10 +5,18 @@ import { candidateController } from "./candidate.controller.js";
 
 const router = Router();
 
+// Get candidate's applications
 router.get(
   "/my-applications",
   checkAuth(UserRole.CANDIDATE),
   candidateController.getMyApplications
+);
+
+// Apply for a job
+router.post(
+  "/apply/:jobId",
+  checkAuth(UserRole.CANDIDATE),
+  candidateController.applyForJob
 );
 
 export const CandidateRoutes: Router = router;
