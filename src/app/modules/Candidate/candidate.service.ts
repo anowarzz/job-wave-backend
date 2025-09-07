@@ -59,7 +59,6 @@ export const applyForJob = async (candidateId: string, jobId: string) => {
         select: "name email",
       },
     })
-    .populate("candidate", "name email");
 
   return populatedApplication;
 };

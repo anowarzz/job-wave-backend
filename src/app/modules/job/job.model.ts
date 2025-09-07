@@ -20,6 +20,7 @@ const jobSchema = new Schema<IJob>(
       ref: "User",
       required: [true, "Recruiter ID is required"],
     },
+    
     jobType: {
       type: String,
       required: [true, "Job type is required"],
@@ -36,6 +37,7 @@ const jobSchema = new Schema<IJob>(
           "Job type must be one of: full-time, part-time, contract, freelance, internship",
       },
     },
+
 
     requiredSkills: {
       type: [String],

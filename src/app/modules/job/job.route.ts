@@ -3,19 +3,9 @@ import { checkAuth } from "../../middlewares/checkAuth.js";
 import { validateRequest } from "../../middlewares/validateRequest.js";
 import { UserRole } from "../user/user.interface.js";
 import { JobController } from "./job.controller.js";
-import {
-  createJobValidationSchema,
-  updateJobValidationSchema,
-} from "./job.validation.js";
+import { updateJobValidationSchema } from "./job.validation.js";
 
 const router = Router();
-// add a job
-router.post(
-  "/add-job",
-  validateRequest(createJobValidationSchema),
-  checkAuth(UserRole.RECRUITER),
-  JobController.addJob
-);
 
 // get all jobs
 router.get("/all-jobs", JobController.getAllJobs);

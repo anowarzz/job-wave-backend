@@ -3,12 +3,6 @@ import AppError from "../../errorHelpers/appError.js";
 import { IJob } from "./job.interface.js";
 import { Job } from "./job.model.js";
 
-// Add a new Job //
-const addJob = async (jobData: IJob) => {
-  const newJob = await Job.create(jobData);
-  return newJob;
-};
-
 // Get all jobs //
 const getAllJobs = async () => {
   const jobs = await Job.find().populate("recruiterId", "-_id name email");
@@ -53,7 +47,6 @@ const updateJob = async (jobId: string, updateData: Partial<IJob>) => {
 };
 
 export const jobService = {
-  addJob,
   getAllJobs,
   getJobById,
   updateJob,
