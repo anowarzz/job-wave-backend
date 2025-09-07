@@ -7,14 +7,14 @@ const router = Router();
 
 // Get all candidates
 router.get(
-  "/candidates",
+  "/all-candidates",
   checkAuth(UserRole.ADMIN),
   AdminController.getAllCandidates
 );
 
 // Get all recruiters
 router.get(
-  "/recruiters",
+  "/all-recruiters",
   checkAuth(UserRole.ADMIN),
   AdminController.getAllRecruiters
 );
