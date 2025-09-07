@@ -9,7 +9,7 @@ const router = Router();
 
 // Add a job
 router.post(
-  "/add-job",
+  "/jobs/add-job",
   validateRequest(createJobValidationSchema),
   checkAuth(UserRole.RECRUITER),
   RecruiterController.addJob

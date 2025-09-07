@@ -13,7 +13,7 @@ export interface IJob {
   _id: Types.ObjectId;
   title: string;
   description: string;
-  recruiter: Types.ObjectId;
+  recruiter?: Types.ObjectId;
   jobType: TJobType;
   requiredSkills: string[];
   location: string;

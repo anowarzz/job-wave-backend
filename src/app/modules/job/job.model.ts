@@ -18,9 +18,8 @@ const jobSchema = new Schema<IJob>(
     recruiter: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: [true, "Recruiter ID is required"],
     },
-    
+
     jobType: {
       type: String,
       required: [true, "Job type is required"],

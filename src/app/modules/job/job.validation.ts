@@ -12,7 +12,7 @@ export const createJobValidationSchema = z.object({
     .min(10, "Job description must be at least 10 characters")
     .max(2000, "Job description must be less than 2000 characters"),
 
-  recruiter: z.string(),
+  recruiter: z.string().optional(),
 
   jobType: z.enum([
     "full-time",
