@@ -37,6 +37,22 @@ const getMyProfile = catchAsync(
   }
 );
 
+//  get any user profile by userId  //
+const getUserProfile = catchAsync(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const { userId } = req.params;
+
+    const user = await userServices.getUserProfile(userId as string);
+
+    sendResponse(res, {
+      statusCode: StatusCodes.OK,
+      success: true,
+      message: "User Profile Retrieved Successfully",
+      data: user,
+    });
+  }
+);
+
 //  update a user
 const updateUser = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -70,5 +86,6 @@ const updateUser = catchAsync(
 export const userController = {
   createUser,
   getMyProfile,
+  getUserProfile,
   updateUser,
 };

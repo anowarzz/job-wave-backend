@@ -42,6 +42,17 @@ const getMyProfile = async (userId: string) => {
   return user;
 };
 
+/*/ get any user profile by userId /*/
+const getUserProfile = async (userId: string) => {
+  const user = await User.findById(userId).select("-password");
+
+  if (!user) {
+    throw new AppError(StatusCodes.NOT_FOUND, "User Not Found");
+  }
+
+  return user;
+};
+
 /*/ update user info /*/
 const updateUser = async (
   userId: string,
@@ -104,5 +115,6 @@ const updateUser = async (
 export const userServices = {
   createUser,
   getMyProfile,
+  getUserProfile,
   updateUser,
 };
