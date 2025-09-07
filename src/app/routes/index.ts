@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { AdminRoutes } from "../modules/Admin/admin.route.js";
 import { AuthRoutes } from "../modules/auth/auth.route.js";
 import { CandidateRoutes } from "../modules/Candidate/candidate.route.js";
 import { JobRoutes } from "../modules/job/job.route.js";
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: "/recruiter",
     route: RecruiterRoutes,
+  },
+  {
+    path: "/admin",
+    route: AdminRoutes,
   },
 ];
 
