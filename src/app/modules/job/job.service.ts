@@ -5,7 +5,7 @@ import { Job } from "./job.model.js";
 
 // Get all jobs //
 const getAllJobs = async () => {
-  const jobs = await Job.find().populate("recruiterId", "-_id name email");
+  const jobs = await Job.find().populate("recruiter", "-_id name email");
   return jobs;
 };
 
@@ -16,7 +16,7 @@ const getJobById = async (jobId: string) => {
   }
 
   const job = await Job.findById(jobId).populate(
-    "recruiterId",
+    "recruiter",
     "-_id name email"
   );
 
@@ -41,7 +41,7 @@ const updateJob = async (jobId: string, updateData: Partial<IJob>) => {
   const updatedJob = await Job.findByIdAndUpdate(jobId, updateData, {
     new: true,
     runValidators: true,
-  }).populate("recruiterId", "-_id name email");
+  }).populate("recruiter", "-_id name email");
 
   return updatedJob;
 };
