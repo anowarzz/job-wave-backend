@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, {
   type Application,
@@ -11,12 +12,16 @@ import router from "./app/routes/index.js";
 
 const app: Application = express();
 
-// Parser
+// Middlewares
 app.use(express.json());
-app.use(cors());
-
-// Passport middleware
 app.use(passport.initialize());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "http://10.0.0.103:3000"],
+    credentials: true,
+  })
+);
 
 app.use("/api/v1", router);
 
