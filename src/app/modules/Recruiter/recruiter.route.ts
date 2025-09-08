@@ -29,4 +29,11 @@ router.get(
   RecruiterController.getJobApplications
 );
 
+// Get analytics for recruiter
+router.get(
+  "/analytics",
+  checkAuth(UserRole.RECRUITER),
+  RecruiterController.getAnalytics
+);
+
 export const RecruiterRoutes: Router = router;

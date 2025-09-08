@@ -13,7 +13,7 @@ const addJob = async (jobData: IJob) => {
 // ----- Get all jobs posted by the  recruiter ------ //
 const getMyJobs = async (recruiterId: string): Promise<IJob[]> => {
   const jobs = await Job.find({
-    recruiterId,
+    recruiter: recruiterId,
   }).sort({ createdAt: -1 });
 
   return jobs;
@@ -52,8 +52,29 @@ const getJobApplications = async (recruiterId: string, jobId: string) => {
   };
 };
 
+// --------- Get analytics for recruiter ---------- //
+const getAnalytics = async (recruiterId: string) => {
+  // Get total jobs posted by recruiter
+  const totalJobsPosted = await Job.countDocuments({
+    recruiter: recruiterId,
+  });
+
+  // Get total applications for all jobs posted by recruiter
+  const totalApplications = await Application.countDocuments({
+    job: {
+      $in: await Job.find({ recruiter: recruiterId }).distinct("_id"),
+    },
+  });
+
+  return {
+    totalJobsPosted,
+    totalApplications,
+  };
+};
+
 export const recruiterService = {
   addJob,
   getMyJobs,
   getJobApplications,
+  getAnalytics,
 };

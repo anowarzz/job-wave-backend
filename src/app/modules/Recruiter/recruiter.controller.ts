@@ -57,8 +57,24 @@ const getJobApplications = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Get analytics for recruiter
+const getAnalytics = catchAsync(async (req: Request, res: Response) => {
+  const decodedToken = req.user as JwtPayload;
+  const recruiterId = decodedToken.userId;
+
+  const analytics = await recruiterService.getAnalytics(recruiterId);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Analytics retrieved successfully",
+    data: analytics,
+  });
+});
+
 export const RecruiterController = {
   addJob,
   getMyPostedJobs,
   getJobApplications,
+  getAnalytics,
 };
