@@ -4,7 +4,7 @@ A comprehensive job portal backend API built with modern technologies to connect
 
 ## 🌐 Live API
 
-**🔗 API Base URL**: [https://job-wave-black.vercel.app/api/v1](https://job-wave-black.vercel.app/api/v1)
+**🔗 API Base URL**: [https://jobwave-server-black.vercel.app/api/v1](https://jobwave-server-black.vercel.app/api/v1)
 
 ## 🚀 Features
 
