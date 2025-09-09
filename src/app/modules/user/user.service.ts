@@ -46,8 +46,7 @@ const getMyProfile = async (userId: string) => {
 
 /*/ get any user profile by userId /*/
 const getUserProfile = async (userId: string) => {
-  const objectId = new mongoose.Types.ObjectId(userId);
-  const user = await User.findById(objectId).select("-password");
+  const user = await User.findById(userId).select("-password");
 
   if (!user) {
     throw new AppError(StatusCodes.NOT_FOUND, "User Not Found");
