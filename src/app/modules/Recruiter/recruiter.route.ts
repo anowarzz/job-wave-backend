@@ -22,8 +22,12 @@ router.get(
   RecruiterController.getMyPostedJobs
 );
 
-
-
+// Delete a job posted by the recruiter
+router.delete(
+  "/jobs/:jobId",
+  checkAuth(UserRole.RECRUITER),
+  RecruiterController.deleteJob
+);
 
 // Get all applications for a specific job
 router.get(
@@ -31,10 +35,6 @@ router.get(
   checkAuth(UserRole.RECRUITER),
   RecruiterController.getJobApplications
 );
-
-
-
-
 
 // Get analytics for recruiter
 router.get(

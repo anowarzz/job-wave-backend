@@ -57,6 +57,22 @@ const getJobApplications = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Delete a job posted by the recruiter
+const deleteJob = catchAsync(async (req: Request, res: Response) => {
+  const decodedToken = req.user as JwtPayload;
+  const recruiterId = decodedToken.userId;
+  const { jobId } = req.params;
+
+  const deletedJob = await recruiterService.deleteJob(recruiterId, jobId);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Job deleted successfully",
+    data: deletedJob,
+  });
+});
+
 // Get analytics for recruiter
 const getAnalytics = catchAsync(async (req: Request, res: Response) => {
   const decodedToken = req.user as JwtPayload;
@@ -76,5 +92,6 @@ export const RecruiterController = {
   addJob,
   getMyPostedJobs,
   getJobApplications,
+  deleteJob,
   getAnalytics,
 };

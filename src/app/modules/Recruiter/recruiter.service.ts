@@ -14,6 +14,7 @@ const addJob = async (jobData: IJob) => {
 const getMyJobs = async (recruiterId: string): Promise<IJob[]> => {
   const jobs = await Job.find({
     recruiter: recruiterId,
+    isDeleted: { $ne: true },
   }).sort({ createdAt: -1 });
 
   return jobs;
@@ -52,17 +53,46 @@ const getJobApplications = async (recruiterId: string, jobId: string) => {
   };
 };
 
-// --------- Get analytics for recruiter ---------- //
-const getAnalytics = async (recruiterId: string) => {
-  // Get total jobs posted by recruiter
-  const totalJobsPosted = await Job.countDocuments({
+// --------- Delete a job posted by recruiter ---------- //
+const deleteJob = async (recruiterId: string, jobId: string) => {
+  // Verify that the job belongs to this recruiter
+  const job = await Job.findOne({
+    _id: jobId,
     recruiter: recruiterId,
   });
 
-  // Get total applications for all jobs posted by recruiter
+  if (!job) {
+    throw new AppError(
+      StatusCodes.NOT_FOUND,
+      "Job not found or you don't have permission to delete this job"
+    );
+  }
+
+  // Soft delete the job by setting isDeleted to true
+  const deletedJob = await Job.findByIdAndUpdate(
+    jobId,
+    { isDeleted: true },
+    { new: true }
+  );
+
+  return deletedJob;
+};
+
+// --------- Get analytics for recruiter ---------- //
+const getAnalytics = async (recruiterId: string) => {
+  // Get total jobs posted by recruiter (excluding deleted ones)
+  const totalJobsPosted = await Job.countDocuments({
+    recruiter: recruiterId,
+    isDeleted: { $ne: true },
+  });
+
+  // Get total applications for all jobs posted by recruiter (excluding deleted jobs)
   const totalApplications = await Application.countDocuments({
     job: {
-      $in: await Job.find({ recruiter: recruiterId }).distinct("_id"),
+      $in: await Job.find({
+        recruiter: recruiterId,
+        isDeleted: { $ne: true },
+      }).distinct("_id"),
     },
   });
 
@@ -76,5 +106,6 @@ export const recruiterService = {
   addJob,
   getMyJobs,
   getJobApplications,
+  deleteJob,
   getAnalytics,
 };
