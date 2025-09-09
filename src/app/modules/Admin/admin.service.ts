@@ -145,10 +145,36 @@ const deleteUser = async (userId: string) => {
 
 // Get all jobs (admin view)
 const getAllJobs = async () => {
-  const jobs = await Job.find()
+  const jobs = await Job.find({ isDeleted: { $ne: true } })
     .populate("recruiter", "name email")
     .sort({ createdAt: -1 });
   return jobs;
+};
+
+// Delete job
+const deleteJob = async (jobId: string) => {
+  if (!jobId) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "Job ID is required");
+  }
+
+  const job = await Job.findById(jobId);
+
+  if (!job) {
+    throw new AppError(StatusCodes.NOT_FOUND, "Job not found");
+  }
+
+  if (job.isDeleted) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "Job is already deleted");
+  }
+
+  // Soft delete the job
+  const deletedJob = await Job.findByIdAndUpdate(
+    jobId,
+    { isDeleted: true },
+    { new: true }
+  );
+
+  return deletedJob;
 };
 
 export const adminService = {
@@ -160,4 +186,5 @@ export const adminService = {
   getAnalytics,
   deleteUser,
   getAllJobs,
+  deleteJob,
 };

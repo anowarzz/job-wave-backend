@@ -22,11 +22,10 @@ export interface IJob {
   status: TJobStatus;
   salaryRange: string;
   isFeatured?: boolean;
+  isDeleted?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
-
-
 
 export interface ISavedJob {
   user: Types.ObjectId;

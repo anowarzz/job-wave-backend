@@ -6,7 +6,10 @@ import { Job } from "./job.model.js";
 
 // Get all jobs //
 const getAllJobs = async () => {
-  const jobs = await Job.find().populate("recruiter", "-_id name email");
+  const jobs = await Job.find({ isDeleted: { $ne: true } }).populate(
+    "recruiter",
+    "-_id name email"
+  );
   return jobs;
 };
 

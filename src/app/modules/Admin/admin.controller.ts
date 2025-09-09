@@ -104,6 +104,19 @@ const getAllJobs = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// Delete job
+const deleteJob = catchAsync(async (req: Request, res: Response) => {
+  const { jobId } = req.params;
+  const job = await adminService.deleteJob(jobId as string);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: "Job deleted successfully",
+    data: job,
+  });
+});
+
 export const AdminController = {
   getAllCandidates,
   getAllRecruiters,
@@ -113,4 +126,5 @@ export const AdminController = {
   getAnalytics,
   deleteUser,
   getAllJobs,
+  deleteJob,
 };

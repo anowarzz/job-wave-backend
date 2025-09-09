@@ -22,12 +22,19 @@ router.get(
   RecruiterController.getMyPostedJobs
 );
 
+
+
+
 // Get all applications for a specific job
 router.get(
   "/job/:jobId/applications",
   checkAuth(UserRole.RECRUITER),
   RecruiterController.getJobApplications
 );
+
+
+
+
 
 // Get analytics for recruiter
 router.get(

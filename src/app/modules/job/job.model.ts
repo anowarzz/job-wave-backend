@@ -18,7 +18,6 @@ const jobSchema = new Schema<IJob>(
     },
     category: {
       type: String,
-      required: [true, "Job category is required"],
       enum: {
         values: Object.values(JobCategory),
         message: `Job category must be one of: ${Object.values(
@@ -71,6 +70,14 @@ const jobSchema = new Schema<IJob>(
       required: [true, "Salary range is required"],
       trim: true,
       maxlength: [50, "Salary range cannot exceed 50 characters"],
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   {

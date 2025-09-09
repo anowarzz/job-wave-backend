@@ -25,6 +25,8 @@ export const createJobValidationSchema = z.object({
     "internship",
   ]),
 
+  
+
   requiredSkills: z.array(z.string()).min(1, "At least one skill is required"),
 
   location: z

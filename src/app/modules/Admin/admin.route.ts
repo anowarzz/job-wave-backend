@@ -19,6 +19,16 @@ router.get(
   AdminController.getAllRecruiters
 );
 
+// Get all jobs
+router.get("/all-jobs", checkAuth(UserRole.ADMIN), AdminController.getAllJobs);
+
+// Get analytics
+router.get(
+  "/analytics",
+  checkAuth(UserRole.ADMIN),
+  AdminController.getAnalytics
+);
+
 // Get user by ID
 router.get(
   "/users/:userId",
@@ -40,21 +50,18 @@ router.patch(
   AdminController.unblockUser
 );
 
-// Get analytics
-router.get(
-  "/analytics",
-  checkAuth(UserRole.ADMIN),
-  AdminController.getAnalytics
-);
-
-// Get all jobs
-router.get("/all-jobs", checkAuth(UserRole.ADMIN), AdminController.getAllJobs);
-
 // Delete user
 router.delete(
   "/users/delete/:userId",
   checkAuth(UserRole.ADMIN),
   AdminController.deleteUser
+);
+
+// Delete job
+router.delete(
+  "/jobs/delete/:jobId",
+  checkAuth(UserRole.ADMIN),
+  AdminController.deleteJob
 );
 
 export const AdminRoutes: Router = router;
