@@ -1,6 +1,7 @@
 import bcryptjs from "bcryptjs";
 import { StatusCodes } from "http-status-codes";
 import { JwtPayload } from "jsonwebtoken";
+import mongoose from "mongoose";
 import { envVars } from "../../config/env.js";
 import AppError from "../../errorHelpers/appError.js";
 import { IUser, UserRole } from "./user.interface.js";
@@ -33,7 +34,8 @@ const createUser = async (userPayload: Partial<IUser>) => {
 
 /*/ get user profile  /*/
 const getMyProfile = async (userId: string) => {
-  const user = await User.findById(userId).select("-password");
+  const objectId = new mongoose.Types.ObjectId(userId);
+  const user = await User.findById(objectId).select("-password");
 
   if (!user) {
     throw new AppError(StatusCodes.NOT_FOUND, "User Not Found");
@@ -44,7 +46,8 @@ const getMyProfile = async (userId: string) => {
 
 /*/ get any user profile by userId /*/
 const getUserProfile = async (userId: string) => {
-  const user = await User.findById(userId).select("-password");
+  const objectId = new mongoose.Types.ObjectId(userId);
+  const user = await User.findById(objectId).select("-password");
 
   if (!user) {
     throw new AppError(StatusCodes.NOT_FOUND, "User Not Found");
@@ -59,8 +62,10 @@ const updateUser = async (
   payload: Partial<IUser>,
   decodedToken: JwtPayload
 ) => {
+  const objectId = new mongoose.Types.ObjectId(userId);
+
   // check if user exist with this id
-  const ifUserExist = await User.findById(userId);
+  const ifUserExist = await User.findById(objectId);
 
   if (!ifUserExist) {
     throw new AppError(
@@ -104,7 +109,7 @@ const updateUser = async (
   }
 
   // update operation
-  const updatedUser = await User.findByIdAndUpdate(userId, payload, {
+  const updatedUser = await User.findByIdAndUpdate(objectId, payload, {
     new: true,
     runValidators: true,
   }).select("-password");

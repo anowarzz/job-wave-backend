@@ -25,9 +25,11 @@ router.get(
 );
 
 // get any user profile by userId
-router.get("/:userId",
+router.get(
+  "/:userId",
   checkAuth(...Object.values(UserRole)),
-  userController.getUserProfile);
+  userController.getUserProfile
+);
 
 // update a user info
 router.patch(

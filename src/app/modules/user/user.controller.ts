@@ -42,7 +42,7 @@ const getUserProfile = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const { userId } = req.params;
 
-    const user = await userServices.getUserProfile(userId as string);
+    const user = await userServices.getUserProfile(userId);
 
     sendResponse(res, {
       statusCode: StatusCodes.OK,

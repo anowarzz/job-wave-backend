@@ -7,6 +7,6 @@ export const handleCastError = (
 ): TGenericErrorResponse => {
   return {
     statusCode: 400,
-    message: `Invalid MogoDB ObjectId . Please provide a valid ObjectId`,
+    message: `Invalid MongoDB ObjectId. Please provide a valid ObjectId`,
   };
 };

@@ -63,7 +63,7 @@ const deleteJob = catchAsync(async (req: Request, res: Response) => {
   const recruiterId = decodedToken.userId;
   const { jobId } = req.params;
 
-  const deletedJob = await recruiterService.deleteJob(recruiterId, jobId);
+  const deletedJob = await recruiterService.deleteJob(recruiterId, jobId as string);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,

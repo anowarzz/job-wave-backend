@@ -31,7 +31,7 @@ const getJobCategories = catchAsync(async (req: Request, res: Response) => {
 // get jobs by category //
 const getJobsByCategory = catchAsync(async (req: Request, res: Response) => {
   const { category } = req.params;
-  const jobs = await jobService.getJobsByCategory(category);
+  const jobs = await jobService.getJobsByCategory(category as string);
   sendResponse(res, {
     statusCode: 200,
     success: true,
