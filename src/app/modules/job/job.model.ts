@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
-import { IJob } from "./job.interface.js";
+import { JobCategory } from "./job.constant.js";
+import { IJob, ISavedJob } from "./job.interface.js";
 
 const jobSchema = new Schema<IJob>(
   {
@@ -14,6 +15,16 @@ const jobSchema = new Schema<IJob>(
       required: [true, "Job description is required"],
       trim: true,
       maxlength: [2000, "Job description cannot exceed 2000 characters"],
+    },
+    category: {
+      type: String,
+      required: [true, "Job category is required"],
+      enum: {
+        values: Object.values(JobCategory),
+        message: `Job category must be one of: ${Object.values(
+          JobCategory
+        ).join(", ")}`,
+      },
     },
     recruiter: {
       type: Schema.Types.ObjectId,
@@ -36,7 +47,6 @@ const jobSchema = new Schema<IJob>(
           "Job type must be one of: full-time, part-time, contract, freelance, internship",
       },
     },
-
 
     requiredSkills: {
       type: [String],
@@ -69,4 +79,25 @@ const jobSchema = new Schema<IJob>(
   }
 );
 
+//  saved job schema
+
+const savedJobSchema = new Schema<ISavedJob>(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    },
+    job: {
+      type: Schema.Types.ObjectId,
+      ref: "Job",
+    },
+  },
+  {
+    timestamps: true,
+    versionKey: false,
+  }
+);
+
 export const Job = model<IJob>("Job", jobSchema);
+
+export const SavedJob = model<ISavedJob>("SavedJob", savedJobSchema);

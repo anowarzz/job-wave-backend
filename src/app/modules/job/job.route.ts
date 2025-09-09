@@ -10,6 +10,12 @@ const router = Router();
 // get all jobs
 router.get("/all-jobs", JobController.getAllJobs);
 
+// get job categories
+router.get("/categories", JobController.getJobCategories);
+
+// get jobs by category
+router.get("/category/:category", JobController.getJobsByCategory);
+
 // get job by ID
 router.get("/:id", JobController.getJobById);
 

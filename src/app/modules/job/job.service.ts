@@ -1,11 +1,34 @@
 import { StatusCodes } from "http-status-codes";
 import AppError from "../../errorHelpers/appError.js";
+import { JobCategory } from "./job.constant.js";
 import { IJob } from "./job.interface.js";
 import { Job } from "./job.model.js";
 
 // Get all jobs //
 const getAllJobs = async () => {
   const jobs = await Job.find().populate("recruiter", "-_id name email");
+  return jobs;
+};
+
+// Get job categories //
+const getJobCategories = async () => {
+  const categories = Object.values(JobCategory).map((category) => ({
+    category,
+    value: category,
+  }));
+  return categories;
+};
+
+// Get jobs by category //
+const getJobsByCategory = async (category: string) => {
+  if (!Object.values(JobCategory).includes(category as JobCategory)) {
+    throw new AppError(StatusCodes.BAD_REQUEST, "Invalid job category");
+  }
+
+  const jobs = await Job.find({ category }).populate(
+    "recruiter",
+    "-_id name email"
+  );
   return jobs;
 };
 
@@ -48,6 +71,8 @@ const updateJob = async (jobId: string, updateData: Partial<IJob>) => {
 
 export const jobService = {
   getAllJobs,
+  getJobCategories,
+  getJobsByCategory,
   getJobById,
   updateJob,
 };

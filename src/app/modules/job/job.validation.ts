@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { JobCategory } from "./job.constant.js";
 
 // job creation validation schema
 export const createJobValidationSchema = z.object({
@@ -11,6 +12,8 @@ export const createJobValidationSchema = z.object({
     .string({ error: "Job description is required" })
     .min(10, "Job description must be at least 10 characters")
     .max(2000, "Job description must be less than 2000 characters"),
+
+  category: z.enum(Object.values(JobCategory)),
 
   recruiter: z.string().optional(),
 
@@ -52,6 +55,8 @@ export const updateJobValidationSchema = z.object({
     .min(10, "Job description must be at least 10 characters")
     .max(2000, "Job description must be less than 2000 characters")
     .optional(),
+
+  category: z.enum(Object.values(JobCategory)).optional(),
 
   recruiter: z.string().optional(),
 

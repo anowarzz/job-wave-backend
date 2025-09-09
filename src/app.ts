@@ -19,8 +19,8 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "http://localhost:3000",
       "https://jobwave-dun.vercel.app",
+      "http://localhost:3000",
       "http://10.0.0.103:3000",
     ],
     credentials: true,

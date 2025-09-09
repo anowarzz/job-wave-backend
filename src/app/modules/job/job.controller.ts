@@ -15,6 +15,31 @@ const getAllJobs = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+//-----
+// get job categories //
+const getJobCategories = catchAsync(async (req: Request, res: Response) => {
+  const categories = await jobService.getJobCategories();
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Job categories retrieved successfully",
+    data: categories,
+  });
+});
+
+//-----
+// get jobs by category //
+const getJobsByCategory = catchAsync(async (req: Request, res: Response) => {
+  const { category } = req.params;
+  const jobs = await jobService.getJobsByCategory(category);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: `Jobs in ${category} category retrieved successfully`,
+    data: jobs,
+  });
+});
+
 // -----
 // get job by ID //
 const getJobById = catchAsync(async (req: Request, res: Response) => {
@@ -45,6 +70,8 @@ const updateJob = catchAsync(async (req: Request, res: Response) => {
 
 export const JobController = {
   getAllJobs,
+  getJobCategories,
+  getJobsByCategory,
   getJobById,
   updateJob,
 };
